@@ -1,0 +1,25 @@
+{% extends extend %}
+
+{% block content %}
+	<div class="row text-center">
+		<div class="col-sm-24">
+          <h3>{{ element.get_localisation }}<h/3>
+		</div>
+	</div>
+	<div class="row">
+        <form class="form-group" method="POST" action="">
+            <firldset>
+                {% csrf_token %}
+                {{ form.as_p }}
+	       </fieldset>
+           <div class="text-center">
+                <div class="btn-group">
+                    <button class="btn btn-xs btn-default" type="submit">Suivant <span class="glyphicon glyphicon-arrow-right"></span></button>
+		          <a href="/structure/modif/element/{{ element.id }}" class="btn btn-xs btn-default"><span class="cancel"></span>Annuler</a>
+	           </div>
+            </div>
+        </form>
+        </div>
+    </div>
+    <hr>
+{% endblock content %}

@@ -1,0 +1,109 @@
+{% extends extend %}
+{% load utilisateurs_extras %}
+
+{% block app_css %}
+<style>
+hr {
+    margin:0px auto;
+}
+.cadre {
+    border: 2px solid black;
+   // height:300px;
+    //overflow-y: auto;
+}
+</style>
+{% endblock app_css %}
+
+{% block content %}
+<div class="row">
+	<div class="col-sm-24" >
+		<form method="POST" action="">
+			<div class="form-group">
+				{% csrf_token %}
+				{{ form.as_p }}
+			</div>
+			<div class="row text-center" style="margin: 30px;">
+				<div class="btn-group">
+					<button class="btn btn-primary" type="submit">Go <span class="glyphicon glyphicon-arrow-right"></span></button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+
+		<div class="row text-center">
+  {% if lesutilisateurs.has_other_pages %}
+    <div class="col-sm-offset-10 col-sm-1">
+      {% if lesutilisateurs.has_previous %}
+        <a class="btn btn-xs btn-default" href="?page={{ lesutilisateurs.previous_page_number }}"><span class="glyphicon glyphicon-arrow-left"></span></a>
+      {% else %}
+        <a class="btn btn-xs btn-default" href="#"><span class="glyphicon glyphicon-arrow-left"></span></a>
+      {% endif %}
+    </div>
+    <div class="col-sm-3">
+      {{ situation }}
+    </div>
+    <div class="col-sm-1">
+      {% if lesutilisateurs.has_next %}
+        <a class="btn btn-xs btn-default" href="?page={{ lesutilisateurs.next_page_number }}"><span class="glyphicon glyphicon-arrow-right"></span></a>
+      {% else %}
+        <a class="btn btn-xs btn-default" href="#"><span class="glyphicon glyphicon-arrow-right"></span></a>
+      {% endif %}
+    </div>
+  {% endif %}
+
+</div>
+	
+    <div class="row">
+	   <b><div class="col-sm-5">Actions</div>
+	   <div class="col-sm-2">Identifiant</div>
+	   <div class="col-sm-5">Prénom nom</div>
+	   <div class="col-sm-2">Admin.</div>
+	   <div class="col-sm-2">Equipe</div>
+       </b>
+       <hr>
+    </div>
+    <div class="cadre">
+    {% for utilisateur in lesutilisateurs %}
+        <hr>
+        <div class="row">
+    		<div class="col-sm-5">
+                 <div class="btn-group">
+                 <a href="/utilisateurs/modif/{{ utilisateur.id }}" class="btn btn-xs btn-default"><span class="update"></span>Modif</a>
+			 	<a href="/utilisateurs/suppr/{{ utilisateur.id }}" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span>Suppr.</a>
+			 	<a href="/utilisateurs/reset-mdp/{{ utilisateur.username }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-ok"></span>Mdp</a>
+                </div>
+            </div>
+			<div class="col-sm-2">
+				{{ utilisateur.username }}
+			</div>
+			<div class="col-sm-5">
+				{{ utilisateur.first_name }} {{ utilisateur.last_name }}
+			</div>
+			<div class="col-sm-2 text-center">
+                {% if utilisateur.is_staff %}
+                    <span class="glyphicon glyphicon-ok"></span>
+                {% endif %}
+			</div>
+			<div class="col-sm-2 text-center">
+				{{ utilisateur.equipe }}
+			</div>
+            </div>
+	{% empty %}
+    	<div class="row">
+			<div class="col-sm-24">		
+				<H4>Pas d'utilisateur connu.</h4>
+			</div>
+		</div>
+	{% endfor %}
+    </div>
+    <div class="row">
+		<div class="col-sm-24">
+			<div class="btn-group">
+				<a href="/utilisateurs/ajout" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Ajouter</a>
+			</div>
+		</div>
+	</div>
+{% endblock content %}

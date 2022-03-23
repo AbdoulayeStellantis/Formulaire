@@ -1,0 +1,34 @@
+{% extends extend %}
+{% load utilisateurs_extras %}
+
+{% block app_css %}
+<style>
+.cadre {
+    border: 2px solid black;
+    height:300px;
+    overflow-y: auto;
+}
+</style>
+{% endblock app_css %}
+
+{% block content %}
+	{% for groupe in lesgroupes %}
+		{% if groupe.nb > 0 %}
+			<b>
+			<div class="row">
+				<div class="col-sm-5">{{ groupe.nom }}</div>
+				<div class="col-sm-2">X {{ groupe.nb }}</div>
+			</div>
+			<hr>
+			</b>
+			{% for utilisateur in groupe.lesutilisateurs %}
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-8">{{ utilisateur.first_name }} {{ utilisateur.last_name }}</div>
+					<div class="col-sm-2">{{ utilisateur.telinterne }}</div>
+					<div class="col-sm-8">{{ utilisateur.email }}</div>
+				</div>
+				<hr>
+			{% endfor %}
+		{%endif %} 
+	{% endfor %}
+{% endblock content %}

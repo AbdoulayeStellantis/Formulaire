@@ -1,0 +1,39 @@
+{% extends extend %}
+
+
+{% block content %}
+	<div class="row text-center">
+		<div class="col-sm-24">
+			<img id='qrcode' alt="" title="qrcode" width="350" height="350" /><br>
+		</div>
+		<div>
+			<div class="row text-center">
+				<div class="col-sm-24">
+					<h6><a id="lien"></a></h6>
+				</div>
+			</div>
+			<div class="row text-center">
+				<div class="col-sm-24">
+					<a href="/communs/buzzers-liste/{{ jeu.cle }}" class="btn btn-primary" role="button">Retour</a>
+				</div>
+			</div>
+
+{% endblock content %}
+
+{% block js %}
+<script>
+	function generateQrCode() {
+		var origin = window.location.origin;
+		var url_buzzer = origin + '{{ complement_url }}';
+		console.log(url_buzzer);
+		var url	 = 'https://api.qrserver.com/v1/create-qr-code/?data=' + url_buzzer + '&amp;size=50x50';
+		$('#qrcode').attr('src', url);
+		$('#lien').text(url_buzzer);
+	}
+	$(document).ready(function () {
+		generateQrCode();
+	});
+
+</script>
+{% endblock js %}
+

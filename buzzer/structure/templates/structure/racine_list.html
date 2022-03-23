@@ -1,0 +1,44 @@
+{% extends extend %}
+
+{% block content %}
+    <div class="row">
+	   <b><div class="col-sm-5">Actions</div>
+	   <div class="col-sm-4">Code</div>
+	   <div class="col-sm-6">Nom</div>
+	   <div class="col-sm-6">Responsable</div>
+       <hr>
+       </b>
+    </div>
+    {% for elem in object_list %}
+		<div class="row">
+    		<div class="col-sm-5">	
+			 	<a href="/structure/modif/element/{{ elem.id }}" class="btn btn-xs btn-default"><span class="update"></span>Modifier</a>
+                <a href="/structure/suppr/element/{{ elem.id }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-remove"></span>Supprimer</a>
+            </div>
+			<div class="col-sm-4">
+				{{ elem.code }}
+			</div>
+			<div class="col-sm-6">
+				{{ elem.libelle }}
+			</div>
+			<div class="col-sm-6">
+				{{ elem.responsable.first_name }} {{ elem.responsable.last_name }}
+			</div>
+        </div>
+	{% empty %}
+    	<div class="row">
+			<div class="col-sm-24">		
+				<H4>Pas de {{ typeelem.libelle }} connu.</h4>
+			</div>
+		</div>
+	{% endfor %}
+	<hr>
+    <div class="row">
+		<div class="col-sm-24">
+			<div class="btn-group">
+				<a href="/structure/ajout/element/{{ typeelem.indice }}/0" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus"></span>Ajouter</a>
+				<!-- a href="/structure/ajout/site" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus"></span>Ajouter</a -->
+			</div>
+		</div>
+	</div>
+{% endblock content %}

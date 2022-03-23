@@ -1,0 +1,104 @@
+{% extends extend %}
+
+
+{% block content %}
+<div style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-around;">
+	<a style="margin-top:10px;" href="/communs/qr/candidat/{{ jeu.cle }}" class="btn btn-primary btn-lg" role="button">Qr code buzzer</a>
+	<a style="margin-top:10px;" href="/communs/qr/telecommande/{{ jeu.cle }}" class="btn btn-primary btn-lg" role="button">Qr code télécommande</a>
+	<button style="margin-top:10px;" onclick="set_type_action('startbuzzers');" class="btn btn-primary btn-lg">Start Buzzers</button>
+	<button style="margin-top:10px;" onclick="set_type_action('affichetouslesbuzzers');" class="btn btn-primary btn-lg">Liste des buzzers</button>
+</div>
+<div class="row text-center">
+	<div class="col-sm-24">
+		<b>
+			<h4><span id="id_titre_liste"></span></h4>
+		
+		</b>
+	</div>
+</div>
+<div id="id_liste">
+</div>
+
+
+<div style="display:none;">
+	<div class="row text-center" id="id_ligne_vide">
+		<div class="col-sm-24">
+			<span id="id_non_buzzer_"></span>
+		</div>
+	</div>
+</div> 
+{% endblock content %}
+
+
+{% block js %}
+<script>
+var type_action = 'liste_buzzers';
+var timer_id;
+
+function affiche_titre_liste(titre){
+	$('#id_titre_liste').html(titre);
+};
+function affiche_liste_buzzers(data){
+	$.each(data, function(index, row) {
+		if ($('#id_non_buzzer_'+row['id_buzzer']).length == 0){
+			//console.log('Pas trouvé');
+			var id_ligne = 'ligne_'+row['id_buzzer'];
+			var newline = $("#id_ligne_vide").clone(true).appendTo($("#id_liste"));
+			newline.attr('id',id_ligne);
+			var nom_buzzer = $('#'+id_ligne+' div span[id="id_non_buzzer_"]');
+			nom_buzzer.attr('id','id_non_buzzer_'+row['id_buzzer']);
+			nom_buzzer.html(row['nom_buzzer']);
+		};
+		//console.log('Coucou2');
+	});
+	//console.log('Coucou1');
+};
+
+function set_type_action(new_action){
+	clearTimeout(timer_id);
+	type_action = new_action;
+	action();
+};
+
+function startbuzzers(){
+	$('#id_liste').children().remove();
+	set_type_action('startbuzzers');
+};
+function action(){
+	$.ajax({
+		url:'/communs/synchro/{{ jeu.id }}/'+type_action,
+		type: 'GET',
+		dataType: 'JSON',
+		cache:false,
+		success:function(data){
+			//console.log(data['action'])
+			// On regarde s'il faut effacer la liste des buzzers qui sont affichés
+			if (data['reset_affichage'] == true){
+				$('#id_liste').children().remove();
+			};
+			
+			
+			if (data['action'] == 'affichetouslesbuzzers'){
+				type_action = 'liste_buzzers';
+			}else if (data['action'] == 'startbuzzers'){
+				type_action = 'liste_buzzers';
+			}else if (data['action'] == 'liste_buzzers'){
+				affiche_titre_liste(data['titre_liste']);
+				affiche_liste_buzzers(data['les_buzzers']);
+			}
+			timer_id = setTimeout('action()', 1000);
+	
+		},
+		error:function(data){
+			console.log('Erreur '+type_action);
+			timer_id = setTimeout('action()', 5000);
+		}
+	});
+};
+
+$(document).ready(function(){
+	action();
+})
+</script>
+{% endblock js %}
+

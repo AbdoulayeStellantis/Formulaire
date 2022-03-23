@@ -1,0 +1,48 @@
+{% extends extend %}
+
+{% block content %}
+	<div class="row>
+		<div class="col-sm-24">
+		  <h1>Liste des pilotes techniques</h1>
+		</div>
+	</div>
+    <div class="row">
+	   <b><div class="col-sm-5">Actions</div>
+	   <div class="col-sm-2">Identifiant</div>
+	   <div class="col-sm-7">Prénom</div>
+	   <div class="col-sm-7">Nom</div>
+       <hr>
+       </b>
+    </div>
+    {% for utilisateur in object_list %}
+		<div class="row">
+    		<div class="col-sm-5">	
+			 	<a href="/utilisateurs/pilotes-techniques/suppr/{{ utilisateur.id }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-remove"></span>Supprimer</a>
+
+            </div>
+			<div class="col-sm-2">
+				{{ utilisateur.username }}
+			</div>
+			<div class="col-sm-7">
+				{{ utilisateur.first_name }}
+			</div>
+			<div class="col-sm-7">
+				{{ utilisateur.last_name }}
+			</div>
+        </div>
+	{% empty %}
+    	<div class="row">
+			<div class="col-sm-24">		
+				<H2>Pas de pilote technique connu.</h2>
+			</div>
+		</div>
+	{% endfor %}
+	<hr>
+    <div class="row">
+		<div class="col-sm-24">
+			<div class="btn-group">
+				<!-- a href="/utilisateurs/ajout" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus"></span>Ajouter</a -->
+			</div>
+		</div>
+	</div>
+{% endblock content %}

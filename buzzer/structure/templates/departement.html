@@ -1,0 +1,6 @@
+<select name="Departement" id="select_departement">
+    <option selected="">Open this select menu</option>
+    {% for key in form.dict_dept %}
+    <option value="#">{{ key }}</option>
+    {% endfor %}
+</select>

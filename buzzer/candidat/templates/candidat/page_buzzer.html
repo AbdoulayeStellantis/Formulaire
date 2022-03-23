@@ -1,0 +1,87 @@
+{% extends extend %}
+
+{% load static %}
+
+{% block content %}
+<div style="display:flex;flex-direction:row;justify-content:space-around;">
+	<button style="margin-top:100px; border-radius: 50%; width:200px; height: 200px; background-color:green; color:black;" id="id_btn_buzzer" onclick="buz();" class="btn btn-lg">BUZZER</button>
+</div>
+<audio id="buzz" src="{% static 'sons/buzzer.mp3' %}" preload="auto"></audio>
+{% endblock content %}
+
+{% block js %}
+
+<script>
+var type_action = 'get_synchro';
+var timer_id;
+var bouton = $('#id_btn_buzzer')
+
+function play_single_sound(id) {
+	//document.getElementById(id).play();
+	var fichieraudio = $('#'+id).attr('src');
+	var audio = new Audio(fichieraudio);
+	audio.volume = 1;
+	audio.play();
+};
+
+function buz(){
+	clearTimeout(timer_id);
+	bouton.attr('disabled', true);
+	set_type_action('set_buzzer_enfonce');
+	bouton.css('backgroundColor', 'red');
+	play_single_sound('buzz');
+};
+
+function reset_buz(){
+	clearTimeout(timer_id);
+	bouton.attr('disabled', false);
+	set_type_action('set_buzzer_pret');
+	bouton.css('backgroundColor', 'green');
+};
+
+function set_type_action(new_action){
+	type_action = new_action;
+action();
+	};
+	
+
+
+
+
+
+function action(){
+	$.ajax({
+		url:'/candidat/synchro/{{ buzzer.id }}/'+type_action,
+		type: 'GET',
+		dataType: 'JSON',
+		cache:false,
+		success:function(data){
+			console.log(data['action'])
+			if (data['action'] == 'get_synchro'){
+				if (data['synchro'] == 'reset_buzzer'){
+					reset_buz();
+				};
+			}else if (data['action'] == 'set_buzzer_enfonce'){
+				type_action = 'get_synchro';;
+			}else if (data['action'] == 'set_buzzer_pret'){
+				type_action = 'get_synchro';;
+			}else if (data['action'] == 'set_buzzer_pret'){
+				type_action = 'get_synchro';;
+			}
+			timer_id = setTimeout('action()', 5000);
+	
+		},
+		error:function(data){
+			console.log('Erreur :'+type_action);
+			timer_id = setTimeout('action()', 5000);
+		}
+	});
+};
+
+$(document).ready(function(){
+	action();
+})
+
+</script>
+{% endblock js %}
+

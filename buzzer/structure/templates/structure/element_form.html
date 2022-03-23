@@ -1,0 +1,192 @@
+{% extends extend %}
+
+{% block app_css %}
+<style>
+.pasmarge {
+    margin-top:0px;
+    margin-bottom:0px;    
+}
+hr {
+    margin-top:0px;
+    margin-bottom:0px;    
+}
+</style>
+{% endblock app_css %}
+{% block content %}
+	<div class="row">
+        <form class="form-group" method="POST" action="">
+            <fieldset>
+                {% csrf_token %}
+                {{ form.as_p }}
+	        </fieldset>
+            <div class="text-center">
+                <div class="btn-group">
+                    <button class="btn btn-xs btn-default" type="submit"><span class="glyphicon glyphicon-floppy-save"></span>Enregistrer</button>
+		            <a href="{{ retour }}" class="btn btn-xs btn-default"><span class="cancel"></span>Annuler</a>
+	           </div>
+            </div>
+        </form>
+    </div>
+	<hr>
+	<div class="row">
+		<div class="col-sm-24">
+			<h4>Responsables</h4>
+		</div>
+	</div>
+	<HR>
+	<div class="row">
+		<b>
+			<div class="col-sm-5 pasmarge">Actions</div>
+			<div class="col-sm-3 pasmarge">Prénom</div>
+			<div class="col-sm-3 pasmarge">Nom</div>
+			<div class="col-sm-5 pasmarge">Tel.</div>
+			<div class="col-sm-5 pasmarge">E-mail</div>
+		</b>
+	</div>
+	{% for resp in object.responsables.all %}
+		<div class="row">
+			<div class="col-sm-5 pasmarge">
+				<div class="btn-group">
+					<a href="/structure/user/confirm/retrait/responsable/{{ object.id_element }}/{{ resp.username }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-remove"></span>Retirer</a>
+				</div>
+			</div>
+			<div class="col-sm-3 pasmarge">{{ resp.first_name }}</div>
+			<div class="col-sm-3 pasmarge">{{ resp.last_name }}</div>
+			<div class="col-sm-5 pasmarge">{{ resp.telinterne }} / {{ resp.telexterne }}</div>
+			<div class="col-sm-5 pasmarge">{{ resp.email }}</div>
+		</div>
+	{% empty %}
+		<p>Pas de responsable connu.</p>
+	{% endfor %}
+	<div class="row">
+		<div class="col-sm-24">
+			<a href="/structure/user/ajout/responsable/{{ object.id_element }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus"></span>Ajouter</a>
+		</div>
+	</div>
+	<hr>
+	{% if object.type.indice == 5 %}
+		<div class="row">
+			<div class="col-sm-24">
+				<h4>Contrôleurs</h4>
+			</div>
+		</div>
+		<HR>
+		<div class="row">
+			<b>
+				<div class="col-sm-5 pasmarge">Actions</div>
+				<div class="col-sm-3 pasmarge">Prénom</div>
+				<div class="col-sm-3 pasmarge">Nom</div>
+				<div class="col-sm-5 pasmarge">Tel.</div>
+				<div class="col-sm-5 pasmarge">E-mail</div>
+			</b>
+		</div>
+		{% for ctrl in object.controleurs.all %}
+			<div class="row">
+				<div class="col-sm-5 pasmarge">
+					<div class="btn-group">
+						<a href="/structure/user/confirm/retrait/controleur/{{ object.id_element }}/{{ ctrl.username }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-remove"></span>Retirer</a>
+					</div>
+				</div>
+				<div class="col-sm-3 pasmarge">{{ ctrl.first_name }}</div>
+				<div class="col-sm-3 pasmarge">{{ ctrl.last_name }}</div>
+				<div class="col-sm-5 pasmarge">{{ ctrl.telinterne }} / {{ ctrl.telexterne }}</div>
+				<div class="col-sm-5 pasmarge">{{ ctrl.email }}</div>
+			</div>
+		{% 	empty %}
+			<p>Pas de contrôleur connu.</p>
+		{% endfor %}
+		<div class="row">
+			<div class="col-sm-24">
+				<a href="/structure/user/ajout/controleur/{{ object.id_element }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus"></span>Ajouter</a>
+			</div>
+		</div>
+		<hr>
+	{% endif %}
+
+
+	<div class="row">
+		<div class="col-sm-24">
+			<H4>Liste des {{ niveausuivant.libelle_pluriel }}</h4>
+		</div>
+	</div>
+	{% if not dernierniveau %}
+		<div class="row">
+			<b>
+				<div class="col-sm-5 pasmarge">Actions</div>
+				<div class="col-sm-4 pasmarge">Code</div>
+				<div class="col-sm-4 pasmarge">Libellé</div>
+			</b>
+		</div>
+		<hr>
+		{% for souselement in souselements %}
+			<div class="row">
+				<div class="col-sm-5">
+					<a href="/structure/modif/element/{{ souselement.id }}" class="btn btn-xs btn-default"><span class="update"></span>Modifier</a>
+					<a href="/structure/suppr/element/{{ souselement.id }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-remove"></span>Supprimer</a>
+				</div>
+				<div class="col-sm-4">
+					{{ souselement.code }}
+				</div>
+				<div class="col-sm-4">
+					{{ souselement.libelle }}
+				</div>
+			</div>
+		{% empty %}
+			<div class="row">
+				<div class="col-sm-24">
+					Pas de {{ niveausuivant.libelle }} connu.
+				</div>
+			</div>
+		{% endfor %}
+		<hr>
+		<div class="row">
+			<div class="col-sm-24">
+				<div class="btn-group">
+					<a href="/structure/ajout/element/{{ niveausuivant.indice }}/{{ object.id }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus"></span>Ajouter</a>
+				</div>
+			</div>
+		</div>
+	{% else %}
+		<div class="row">
+			<b>
+				<div class="col-sm-4 pasmarge">nb opérateurs</div>
+				<div class="col-sm-2 pasmarge">Tps de cycle.</div>
+			</b>
+		</div>
+		<hr>
+		{% for souselement in souselements %}
+			<div class="row">
+				<div class="col-sm-5">
+					<a href="/structure/modif/{{ souselement.id }}" class="btn btn-xs btn-default"><span class="update"></span>Modifier</a>
+					<a href="/structure/gamme/{{ souselement.id }}" class="btn btn-xs btn-default"><span class="update"></span>Gamme</a>
+				</div>
+				<div class="col-sm-2">
+					{{ souselement.nbOperateur }}
+				</div>
+				<div class="col-sm-4">
+					{{ souselement.tdc }}
+				</div>
+				<div class="col-sm-4">
+					toto
+				</div>
+			</div>
+		{% empty %}
+			<div class="row">
+				<div class="col-sm-4">
+					TOTO
+				</div>
+				<div class="col-sm-24">
+					Pas de {{ niveausuivant.libelle }} connu.
+				</div>
+			</div>
+		{% endfor %}
+		<hr>
+		<div class="row">
+			<div class="col-sm-24">
+				<div class="btn-group">
+					<a href="/structure/ajout-organisation/{{ object.id }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus"></span>Ajouter</a>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+{% endblock content %}

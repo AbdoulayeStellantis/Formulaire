@@ -1,0 +1,15 @@
+{% extends extend %}
+
+{% block content %}
+     <div class="row text-center">
+        <div class="col-sm-24">
+            <p>Le mot de passe de {{ user.first_name }} {{ user.last_name }} a bien été réinitialisé.</p>
+            <p>{{ mdp }}</p>
+            <div class="btn-group">
+                <a class="btn btn-default" href="/utilisateurs/liste">Ok</a>
+            </div>
+    </div>
+{# Assumes you setup the password_reset view in your URLconf #}
+<!-- p><a href="{% url 'password_reset' %}">Lost password?</a></p -->
+
+{% endblock %}

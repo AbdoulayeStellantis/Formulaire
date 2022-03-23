@@ -1,0 +1,14 @@
+{% extends extend %}
+
+
+
+{% block content %}
+<form class="form-group" method="post" action="">
+	<fieldset>
+		{% csrf_token %}
+		{% form.as_p %}
+	</fieldset>
+	<input type="submit" value="Suivant"/>
+</form>
+
+{% endblock content %}

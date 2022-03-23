@@ -1,0 +1,62 @@
+{% extends extend %}
+
+
+{% block content %}
+<div class="row text-center">
+	<div class="col-sm-24">
+		<b>
+			Telecommande
+		</b>
+	</div>
+</div>
+
+<button class="btn btn-lg btn-default" type="button" onclick="set_type_action('reset_buzzers')">Lancer</button>
+<button class="btn btn-lg btn-default" type="button" onclick="set_type_action('liste_buzzers')">liste buzzers</button>
+
+{% endblock content %}
+
+
+{% block js %}
+
+<script>
+var type_action = 'etat';
+var timer_id;
+
+function set_type_action(new_action){
+	clearTimeout(timer_id);
+	type_action = new_action;
+	action();
+};
+
+function action(){
+	$.ajax({
+		url:'/telecommande/synchro/{{ jeu.id }}/'+type_action,
+		type: 'GET',
+		dataType: 'JSON',
+		cache:false,
+		success:function(data){
+			console.log(data['action'])
+			if (data['action'] == 'etat'){
+				a = 0;
+			}else if (data['action'] == 'reset_buzzers'){
+				type_action = 'etat';
+			}else if (data['action'] == 'liste_buzzers'){
+				a = 0;
+			}
+			timer_id = setTimeout('action()', 5000);
+	
+		},
+		error:function(data){
+			console.log('Erreur '+type_action);
+			timer_id = setTimeout('action()', 5000);
+		}
+	});
+};
+
+$(document).ready(function(){
+	action();
+})
+
+</script>
+{% endblock js %}
+

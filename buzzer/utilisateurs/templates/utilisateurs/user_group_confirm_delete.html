@@ -1,0 +1,25 @@
+{% extends extend %}
+
+{% block content %}
+	<div class="row>
+		<div class="col-sm-24">
+		  <p>Confirmer le retrait de {{object.first_name }} {{ object.last_name }} du groupe {{ groupe }}.</p>
+		</div>
+	</div>
+	<div class="ro text-centerw>
+        <div class="form-group">
+        <form method="POST" action="">
+            <fieldset>
+                {% csrf_token %}
+                {{ form.as_p }}
+	        </fieldset>
+           <div class="text-center">
+                <div class="btn-group">
+                    <button class="btn btn-xs btn-default" type="submit"><span class="glyphicon glyphicon-remove"></span>Retirer</button>
+		          <a href="/utilisateurs/groupe/liste/{{ groupe }}" class="btn btn-xs btn-default"><span class="cancel"></span>Annuler</a>
+	           </div>
+           </div>
+        </form>
+        </div>
+    </div>
+{% endblock content %}

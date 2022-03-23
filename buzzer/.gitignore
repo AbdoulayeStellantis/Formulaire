@@ -1,0 +1,11 @@
+﻿# Les ligne commencant par '#' sont des commentaires
+# Ignorer tous les fichiers pyc ou pyo
+*.py[oc]
+# Ignorer tous fichier __pycache__
+__py*
+# Ignorer les fichier sqlite3
+*.sqlite3
+migrat*
+cert.crt
+cert.key
+media/

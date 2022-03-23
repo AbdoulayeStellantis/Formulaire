@@ -1,0 +1,25 @@
+{% extends extend %}
+
+{% block content %}
+    <div class="row">
+		<div class="col-sm-24">
+            <H2>Confirmation de la suppression de {{object.first_name}} {{ object.last_name }}<h2>
+		</div>
+	</div>
+    <div class="row">
+		<div class="col-sm-24">
+            <form class="form-group" action="" method="post">
+                <fieldset>
+                    {% csrf_token %}			
+                </fieldser>
+                <div class="text-center">
+                
+                    <div class="btn-group">
+                        <button class="btn btn-xs btn-default" type="submit"><span class="glyphicon glyphicon-ok"></span>Supprimer</button>
+				        <a href="/utilisateurs/liste" class="btn btn-xs btn-default"><span class="cancel"></span>Annuler</a>
+			         </div>
+                </div>
+            </form>
+		</div>
+	</div>
+{% endblock content %}

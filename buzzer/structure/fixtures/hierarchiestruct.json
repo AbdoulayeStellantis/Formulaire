@@ -1,0 +1,56 @@
+[
+	{
+		"model": "communs.HierarchieStruct",
+		"pk": 1,
+		"fields": {
+			"indice": 1,
+			"libelle": "département",
+			"libelle_pluriel": "départements"
+		}
+	},
+	{
+		"model": "communs.HierarchieStruct",
+		"pk": 2,
+		"fields": {
+			"indice": 2,
+			"libelle": "rg",
+			"libelle_pluriel": "rgs"
+		}
+	},
+	{
+		"model": "communs.HierarchieStruct",
+		"pk": 3,
+		"fields": {
+			"indice": 3,
+			"libelle": "uep",
+			"libelle_pluriel": "ueps"
+		}
+	},
+	{
+		"model": "communs.HierarchieStruct",
+		"pk": 4,
+		"fields": {
+			"indice": 4,
+			"libelle": "ligne",
+			"libelle_pluriel": "lignes"
+		}
+	},
+	{
+		"model": "communs.HierarchieStruct",
+		"pk": 5,
+		"fields": {
+			"indice": 5,
+			"libelle": "référence",
+			"libelle_pluriel": "références"
+		}
+	},
+	{
+		"model": "communs.HierarchieStruct",
+		"pk": 6,
+		"fields": {
+			"indice": 6,
+			"libelle": "organisation",
+			"libelle_pluriel": "organisations"
+		}
+	}
+]

@@ -1,0 +1,57 @@
+{% extends extend %}
+
+{% block app_css %}
+<style>
+.pasmarge {
+    margin-top:0px;
+    margin-bottom:0px;    
+}
+hr {
+    margin-top:0px;
+    margin-bottom:0px;    
+}
+</style>
+{% endblock app_css %}
+{% block content %}
+	<div class="row text-center">
+		<div class="col-sm-24">
+			<h4>Moyen : {{ moyen.numero }} - {{ moyen.libelle }}</h4>
+		</div>
+	</div>
+	<div class="row text-center">
+		<div class="col-sm-24">
+				<a href="/structure/modif/element/{{ moyen.structure_id.id }}" class="btn btn-primary" role="button">Retour</a>
+		</div>
+	</div>
+	<HR>
+	<div class="row">
+		<b>
+			<div class="col-sm-5 pasmarge">Action</div>
+			<div class="col-sm-5 pasmarge">Intitulé</div>
+			<div class="col-sm-6 pasmarge">fichier</div>
+		</b>
+	</div>
+	{% for gamme in object_list %}
+		<div class="row">
+			<div class="col-sm-5 pasmarge">
+				<div class="btn-group">
+					<a href="/structure/gamme/suppr/{{ gamme.id }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-remove"></span>Retirer</a>
+				</div>
+			</div>
+			<div class="col-sm-5 pasmarge">
+				<a href="{{ gamme.fichier.url }}" target="_blank"> {{ gamme.intitule }}</a>
+			</div>
+			<div class="col-sm-6 pasmarge">{{ gamme.fichier.name }}</div>
+		</div>
+	{% empty %}
+		<p>Pas de gamme connue.</p>
+	{% endfor %}
+
+	<hr>
+	<div class="row">
+		<div class="col-sm-4">
+			<a href="/structure/gamme/ajout/{{ moyen.id }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus"></span>Ajouter</a>
+		</div>
+	</div>
+
+{% endblock content %}

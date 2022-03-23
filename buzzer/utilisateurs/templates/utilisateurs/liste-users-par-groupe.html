@@ -1,0 +1,8 @@
+<div align="center">
+    {% for groupe in listeuserspargroupe %}
+        <div class="row">
+            <div class="col-xs-12 text-left">{{ groupe.nom }}</div>
+            <div class="col-xs-12 text-right">{{ groupe.nb }}</div>
+        </div>
+    {% endfor %}
+</div>

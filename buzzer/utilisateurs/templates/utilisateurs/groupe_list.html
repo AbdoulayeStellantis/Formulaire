@@ -1,0 +1,46 @@
+{% extends extend %}
+
+{% block app_css %}
+<style>
+hr {
+    margin: 0px auto;
+}
+.cadre {
+    border: 2px solid black;
+    height: 300px;
+    overflow-y: auto.
+}
+</style>
+{% endblock app_css %}
+
+{% block content %}
+    <div class="row">
+	   <b><div class="col-sm-5">Actions</div>
+	   <div class="col-sm-2">Identifiant</div>
+	   <div class="col-sm-6">Prénom nom</div>
+       </b>
+    </div>
+    <div class="cadre">
+    {% for utilisateur in object_list %}
+		<div class="row">
+    		<div class="col-sm-5">	
+			 	<!-- a href="/utilisateurs/modif/{{ utilisateur.id }}" class="btn btn-xs btn-default"><span class="update"></span>Modifier</a -->
+			 	<a href="/utilisateurs/suppr/groupe/{{ utilisateur.id }}/{{ groupe }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-remove"></span>Retirer</a>
+
+            </div>
+			<div class="col-sm-2">
+				{{ utilisateur.username }}
+			</div>
+			<div class="col-sm-6">
+				{{ utilisateur.first_name }} {{ utilisateur.last_name }}
+			</div>
+        </div>
+	{% empty %}
+    	<div class="row">
+			<div class="col-sm-24">		
+				<H2>Aucun {{ groupe }} connus.</h2>
+			</div>
+		</div>
+	{% endfor %}
+    </div>
+{% endblock content %}

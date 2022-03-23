@@ -1,0 +1,35 @@
+{% extends extend %}
+
+{% block content %}
+	<div class="row text-center">
+		<div class="col-sm-24">
+            <H4>Confirmation de la suppression de la gamme {{object.intitule}} du moyen n° {{ object.moyen.numero }} - {{ object.moyen.libelle }}<h4>
+		</div>
+	</div>
+    {% if impossible %}
+        <div class="row text-center">
+		    <div class="col-sm-24">
+                <h4>Impossible de supprimer cette gamme.<h4>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="btn-group">
+				<a href="{{ retour }}" class="btn btn-xs btn-default"><span class="cancel"></span>Retour</a>
+			</div>
+        </div>
+    {% else %}
+        <div class="row">
+		    <div class="col-sm-24">
+                <form class="form-group" action="" method="post">
+                    {% csrf_token %}			
+                    <div class="text-center">
+                        <div class="btn-group">
+                            <button class="btn btn-xs btn-default" type="submit"><span class="glyphicon glyphicon-ok"></span>Supprimer</button>
+				            <a href="{{ retour }}" class="btn btn-xs btn-default"><span class="cancel"></span>Annuler</a>
+			            </div>
+                    </div>
+                </form>
+             </div>
+	   </div>
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,19 @@
+<div class="container" align="center" style="width: 100%;">
+    {% if request.user.is_authenticated %}
+        <div class="row">
+            <div class="col-sm-24">
+                Bonjour {{ request.user.first_name }} {{ request.user.last_name }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-24">
+                <a href="/logout">Deconnexion</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-24">
+                <a href="/accounts/password_change">Changt. mot de passe</a>
+            </div>
+        </div>
+    {% endif %}
+</DIV>
